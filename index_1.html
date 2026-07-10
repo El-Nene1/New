@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coming Soon</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600&family=Inter:wght@400;500&display=swap');
+
+  :root {
+    --ink: #1b1d22;
+    --paper: #eef1ee;
+    --line: #c7cdc7;
+    --accent: #3d5a45;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    margin: 0;
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    overflow: hidden;
+  }
+
+  .scene {
+    position: relative;
+    width: 100%;
+    max-width: 640px;
+    text-align: center;
+  }
+
+  .eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: rise 0.8s ease forwards 0.1s;
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    line-height: 1.05;
+    margin: 0 0 1.25rem;
+    letter-spacing: -0.01em;
+    opacity: 0;
+    animation: rise 0.9s ease forwards 0.25s;
+  }
+
+  h1 em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--accent);
+  }
+
+  p.sub {
+    font-size: 1.05rem;
+    color: #55584f;
+    max-width: 420px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.6;
+    opacity: 0;
+    animation: rise 0.9s ease forwards 0.4s;
+  }
+
+  .mark {
+    width: 44px;
+    height: 44px;
+    margin: 0 auto 2rem;
+    opacity: 0;
+    animation: rise 0.9s ease forwards 0s;
+  }
+
+  .divider {
+    width: 40px;
+    height: 1px;
+    background: var(--line);
+    margin: 0 auto 2rem;
+    transform: scaleX(0);
+    animation: growLine 0.8s ease forwards 0.55s;
+  }
+
+  form {
+    display: flex;
+    gap: 0.5rem;
+    max-width: 360px;
+    margin: 0 auto;
+    opacity: 0;
+    animation: rise 0.9s ease forwards 0.55s;
+  }
+
+  input[type="email"] {
+    flex: 1;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--line);
+    background: transparent;
+    border-radius: 3px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  input[type="email"]:focus {
+    border-color: var(--accent);
+  }
+
+  button {
+    padding: 0.85rem 1.4rem;
+    border: none;
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 3px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  button:hover {
+    background: var(--accent);
+  }
+
+  button:focus-visible, input:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .note {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: #8a8d82;
+    opacity: 0;
+    animation: rise 0.9s ease forwards 0.7s;
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes growLine {
+    to { transform: scaleX(1); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .eyebrow, h1, p.sub, .mark, form, .note { animation: none; opacity: 1; }
+    .divider { animation: none; transform: scaleX(1); }
+  }
+
+  @media (max-width: 480px) {
+    form { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+  <div class="scene">
+    <svg class="mark" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="22" cy="22" r="21" stroke="#3d5a45" stroke-width="1.2"/>
+      <path d="M22 10 L22 34 M10 22 L34 22" stroke="#3d5a45" stroke-width="1.2"/>
+    </svg>
+    <div class="eyebrow">Something new is on its way</div>
+    <h1>We're building<br><em>quietly</em> for now</h1>
+    <p class="sub">The page isn't ready yet, but it will be soon. Leave your email and you'll be the first to know when it opens.</p>
+    <div class="divider"></div>
+    <form onsubmit="handleSubmit(event)">
+      <input type="email" id="email" placeholder="you@example.com" required aria-label="Email address">
+      <button type="submit">Notify me</button>
+    </form>
+    <div class="note" id="note">No spam. Just one email when we launch.</div>
+  </div>
+
+  <script>
+    function handleSubmit(e) {
+      e.preventDefault();
+      const note = document.getElementById('note');
+      const email = document.getElementById('email');
+      note.textContent = "Thanks — we'll let you know.";
+      email.value = '';
+    }
+  </script>
+</body>
+</html>
