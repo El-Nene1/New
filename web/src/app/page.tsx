@@ -1,3 +1,5 @@
+import Link from "next/link"
+
 import { cn } from "@/lib/utils"
 import { Marquee } from "@/components/magicui/marquee"
 
@@ -71,6 +73,12 @@ export default function Home() {
           wired up manually since the shadcn CLI&apos;s registry host wasn&apos;t
           reachable from this environment.
         </p>
+        <Link
+          href="/components"
+          className="mt-2 text-sm font-medium text-foreground/70 underline underline-offset-4 hover:text-foreground"
+        >
+          See more components →
+        </Link>
       </header>
 
       <section className="flex w-full max-w-4xl flex-col gap-4">
