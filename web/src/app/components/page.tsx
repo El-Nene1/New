@@ -151,12 +151,20 @@ export default function ComponentsPage() {
           pulled directly from magicui&apos;s GitHub source since the shadcn
           registry host isn&apos;t reachable from this environment.
         </p>
-        <Link
-          href="/"
-          className="mt-2 text-sm font-medium text-foreground/70 underline underline-offset-4 hover:text-foreground"
-        >
-          ← Back to Marquee demo
-        </Link>
+        <div className="mt-2 flex gap-4 text-sm font-medium">
+          <Link
+            href="/"
+            className="text-foreground/70 underline underline-offset-4 hover:text-foreground"
+          >
+            ← Back to Marquee demo
+          </Link>
+          <Link
+            href="/components/more"
+            className="text-foreground/70 underline underline-offset-4 hover:text-foreground"
+          >
+            More components →
+          </Link>
+        </div>
       </header>
 
       <Section title="Terminal" description="An animated terminal window that simulates a CLI session.">
