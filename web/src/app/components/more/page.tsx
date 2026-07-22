@@ -17,12 +17,38 @@ export default function MoreComponentsPage() {
           Globe, Tweet Card, Orbiting Circles, Avatar Circles, Icon Cloud,
           Lens, Pointer, Smooth Cursor, Progressive Blur, and Dotted Map.
         </p>
-        <Link
-          href="/components"
-          className="mt-2 text-sm font-medium text-foreground/70 underline underline-offset-4 hover:text-foreground"
-        >
-          ← Back to the first components page
-        </Link>
+        <div className="mt-2 flex flex-wrap justify-center gap-4 text-sm font-medium">
+          <Link
+            href="/components"
+            className="text-foreground/70 underline underline-offset-4 hover:text-foreground"
+          >
+            ← Back
+          </Link>
+          <Link
+            href="/components/backgrounds"
+            className="text-foreground/70 underline underline-offset-4 hover:text-foreground"
+          >
+            Backgrounds & Effects →
+          </Link>
+          <Link
+            href="/components/text"
+            className="text-foreground/70 underline underline-offset-4 hover:text-foreground"
+          >
+            Text Effects →
+          </Link>
+          <Link
+            href="/components/buttons-cards"
+            className="text-foreground/70 underline underline-offset-4 hover:text-foreground"
+          >
+            Buttons & Cards →
+          </Link>
+          <Link
+            href="/components/showcase"
+            className="text-foreground/70 underline underline-offset-4 hover:text-foreground"
+          >
+            Devices & Data →
+          </Link>
+        </div>
       </header>
 
       <section className="flex w-full max-w-4xl flex-col items-center gap-6">
