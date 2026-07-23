@@ -1,0 +1,19 @@
+"use client"
+
+import { useTheme } from "next-themes"
+
+import { AnimatedThemeToggler } from "@/components/magicui/animated-theme-toggler"
+
+export default function AnimatedThemeTogglerDemo() {
+  const { resolvedTheme, setTheme } = useTheme()
+
+  return (
+    <div className="flex justify-center p-6">
+      <AnimatedThemeToggler
+        theme={resolvedTheme === "dark" ? "dark" : "light"}
+        onThemeChange={setTheme}
+        className="rounded-full border p-3"
+      />
+    </div>
+  )
+}
