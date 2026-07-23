@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cafecito58 — Panel del local</title>
+<link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="mark">58</div>
+      <div>
+        <h1>Cafecito58</h1>
+        <small>Panel del local</small>
+      </div>
+    </div>
+    <nav class="tabs">
+      <a href="/" style="align-self:center; font-size:0.85rem;">← Ir al sitio de clientes</a>
+    </nav>
+  </header>
+
+  <main>
+    <div id="login-view" class="login-box">
+      <h2>Entrar</h2>
+      <div class="field">
+        <label for="password">Contraseña del personal</label>
+        <input type="password" id="password" placeholder="••••••••">
+      </div>
+      <button class="primary" id="loginBtn">Entrar</button>
+      <div class="error-msg" id="login-error"></div>
+    </div>
+
+    <div id="orders-view" style="display:none;">
+      <div class="filters" id="filters">
+        <button data-filter="active" class="active">Activas</button>
+        <button data-filter="pending">Recibidas</button>
+        <button data-filter="preparing">Preparando</button>
+        <button data-filter="ready">Listas</button>
+        <button data-filter="completed">Entregadas</button>
+        <button data-filter="all">Todas</button>
+      </div>
+      <div id="orders-list"></div>
+    </div>
+  </main>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/admin.js"></script>
+</body>
+</html>

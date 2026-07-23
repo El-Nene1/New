@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cafecito58 — Ordena para recoger</title>
+<link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="mark">58</div>
+      <div>
+        <h1>Cafecito58</h1>
+        <small>Ordena aquí, recoge en el local</small>
+      </div>
+    </div>
+    <nav class="tabs">
+      <button id="tab-order" class="active">Hacer una orden</button>
+      <button id="tab-track">Ver mi orden</button>
+      <a href="/admin.html" style="align-self:center; font-size:0.8rem; color:#8a8d82; margin-left:0.5rem;">Personal</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="view-order">
+      <div class="layout">
+        <div id="menu"></div>
+
+        <aside class="cart">
+          <h2>Tu orden</h2>
+          <div id="cart-lines"><p class="cart-empty">Aún no has agregado nada.</p></div>
+          <div class="cart-total" id="cart-total" style="display:none;">
+            <span>Total</span><span id="cart-total-amount">$0.00</span>
+          </div>
+
+          <div class="field">
+            <label for="customerName">Nombre</label>
+            <input type="text" id="customerName" placeholder="Tu nombre" autocomplete="name">
+          </div>
+          <div class="field">
+            <label for="phone">Teléfono</label>
+            <input type="tel" id="phone" placeholder="(305) 555-0100" autocomplete="tel">
+          </div>
+          <div class="field">
+            <label for="pickupTime">Hora de recogida</label>
+            <select id="pickupTime"></select>
+          </div>
+          <div class="field">
+            <label for="notes">Notas (opcional)</label>
+            <textarea id="notes" placeholder="Ej: sin azúcar, extra caliente..."></textarea>
+          </div>
+
+          <button class="primary" id="submitOrder">Confirmar orden</button>
+          <div class="error-msg" id="order-error"></div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="view-track" style="display:none;">
+      <div class="track-box">
+        <h2 style="font-family:'Fraunces',serif; margin-top:0;">Ver el estado de mi orden</h2>
+        <div class="field">
+          <label for="trackCode">Código de la orden</label>
+          <input type="text" id="trackCode" placeholder="C-0001">
+        </div>
+        <div class="field">
+          <label for="trackPhone">Teléfono usado en la orden</label>
+          <input type="tel" id="trackPhone" placeholder="(305) 555-0100">
+        </div>
+        <button class="primary" id="trackSubmit">Buscar orden</button>
+        <div class="error-msg" id="track-error"></div>
+        <div id="track-result" class="track-result" style="display:none;"></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="confirm-modal" class="modal-backdrop" style="display:none;">
+    <div class="modal">
+      <p>¡Orden recibida!</p>
+      <div class="code" id="confirm-code"></div>
+      <p id="confirm-detail"></p>
+      <button class="primary" id="confirm-close">Listo</button>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/customer.js"></script>
+</body>
+</html>

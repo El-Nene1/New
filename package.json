@@ -1,0 +1,15 @@
+{
+  "name": "cafecito58",
+  "version": "1.0.0",
+  "description": "Sistema de ordenes para recoger en el local - Cafecito58",
+  "private": true,
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "socket.io": "^4.7.5"
+  }
+}
