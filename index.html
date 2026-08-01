@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Professional Barber — Barbería de precisión · Vega Alta, Puerto Rico</title>
+<meta name="description" content="Barbería de precisión en Vega Alta, Puerto Rico. Cortes modernos, diseño de barba, micropigmentación capilar y servicio a domicilio. Reserva por WhatsApp.">
+<meta name="theme-color" content="#0B0A09">
+<meta property="og:title" content="Professional Barber — Vega Alta, Puerto Rico">
+<meta property="og:description" content="Tu imagen no es un juego. Es tu firma.">
+<meta property="og:type" content="website">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+
+  :root {
+    --ink: #0B0A09;
+    --soot: #15120E;
+    --paper: #E9E2D5;
+    --paper-deep: #D5CAB6;
+    --brass: #A8834B;
+    --brass-lit: #C9A567;
+    --brass-deep: #7E5F2F;
+    --bone: #E4DDD1;
+    --mute: #8A8378;
+    --rule: rgba(168, 131, 75, .26);
+    --rule-ink: rgba(11, 10, 9, .18);
+
+    --display: 'Didot', 'Bodoni MT', 'Bodoni 72', 'Playfair Display', Georgia, 'Times New Roman', serif;
+    --sans: 'Helvetica Neue', Helvetica, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+    --fs-display: clamp(2.7rem, 7.6vw, 6.2rem);
+    --fs-h2: clamp(1.75rem, 4.3vw, 3.3rem);
+    --fs-lead: clamp(1rem, 1.35vw, 1.15rem);
+    --fs-body: .93rem;
+    --fs-label: .64rem;
+
+    --pad-y: clamp(88px, 12vw, 170px);
+    --gut: clamp(20px, 5vw, 64px);
+    --wrap: 1240px;
+
+    --ease: cubic-bezier(.16, 1, .3, 1);
+  }
+
+  html { background: var(--ink); scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--ink);
+    color: var(--bone);
+    font-family: var(--sans);
+    font-size: var(--fs-body);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    pointer-events: none;
+    opacity: .05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .wrap {
+    max-width: var(--wrap);
+    margin-inline: auto;
+    padding-inline: var(--gut);
+  }
+
+  /* ---------- shared type ---------- */
+
+  .label {
+    font-family: var(--sans);
+    font-size: var(--fs-label);
+    font-weight: 500;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: var(--brass);
+  }
+
+  .folio {
+    font-family: var(--display);
+    font-size: .8rem;
+    letter-spacing: .1em;
+    color: var(--brass);
+    font-variant-numeric: tabular-nums;
+  }
+
+  h2.head {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: var(--fs-h2);
+    line-height: 1.02;
+    letter-spacing: .01em;
+    text-transform: uppercase;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  h2.head em {
+    font-style: italic;
+    color: var(--brass-lit);
+  }
+
+  .lead {
+    font-size: var(--fs-lead);
+    line-height: 1.7;
+    color: var(--mute);
+    max-width: 48ch;
+    margin: 0;
+  }
+
+  .hair {
+    height: 1px;
+    background: var(--rule);
+    border: 0;
+    margin: 0;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 1.2s var(--ease);
+  }
+
+  .in .hair { transform: scaleX(1); }
+
+  /* ---------- reveal ---------- */
+
+  .rv {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity .95s var(--ease), transform .95s var(--ease);
+    transition-delay: var(--d, 0ms);
+  }
+
+  .in .rv, .rv.in { opacity: 1; transform: none; }
+
+  .mask { display: block; overflow: hidden; }
+
+  .mask > * {
+    display: block;
+    transform: translateY(106%);
+    transition: transform 1.05s var(--ease);
+    transition-delay: var(--d, 0ms);
+  }
+
+  .in .mask > * { transform: none; }
+
+  /* ---------- nav ---------- */
+
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 80;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px var(--gut);
+    background: linear-gradient(180deg, rgba(11, 10, 9, .92), rgba(11, 10, 9, 0));
+    transition: background .4s linear;
+  }
+
+  .nav.solid { background: rgba(11, 10, 9, .96); border-bottom: 1px solid var(--rule); }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+  }
+
+  .brand .mk { width: 26px; height: 32px; flex: none; }
+
+  .brand .nm {
+    font-family: var(--display);
+    font-size: .74rem;
+    letter-spacing: .26em;
+    text-transform: uppercase;
+    color: var(--bone);
+    white-space: nowrap;
+  }
+
+  .brand .nm i {
+    display: block;
+    font-family: var(--sans);
+    font-style: normal;
+    font-size: .54rem;
+    letter-spacing: .3em;
+    color: var(--brass);
+    margin-top: 3px;
+  }
+
+  .nav-right { display: flex; align-items: center; gap: 10px; }
+
+  .lang {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--rule);
+  }
+
+  .lang button {
+    appearance: none;
+    background: none;
+    border: 0;
+    color: var(--mute);
+    font-family: var(--sans);
+    font-size: .6rem;
+    font-weight: 500;
+    letter-spacing: .18em;
+    padding: 8px 10px;
+    cursor: pointer;
+    transition: color .2s, background .2s;
+  }
+
+  .lang button.on { color: var(--ink); background: var(--brass); }
+  .lang button:not(.on):hover { color: var(--bone); }
+
+  /* ---------- buttons ---------- */
+
+  .wa {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--sans);
+    font-size: .68rem;
+    font-weight: 600;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 14px 24px;
+    color: var(--ink);
+    background: var(--brass);
+    border: 1px solid var(--brass);
+    transition: background .25s var(--ease), color .25s var(--ease), letter-spacing .25s var(--ease);
+  }
+
+  .wa:hover { background: var(--brass-lit); border-color: var(--brass-lit); letter-spacing: .26em; }
+  .wa svg { width: 15px; height: 15px; flex: none; }
+
+  .wa.sm { padding: 10px 16px; font-size: .6rem; letter-spacing: .16em; }
+  .wa.sm:hover { letter-spacing: .19em; }
+
+  .wa.ghost {
+    background: none;
+    color: var(--brass-lit);
+    border-color: var(--rule);
+  }
+
+  .wa.ghost:hover { background: none; color: var(--bone); border-color: var(--brass); }
+
+  a:focus-visible, button:focus-visible {
+    outline: 1px solid var(--brass-lit);
+    outline-offset: 3px;
+  }
+
+  /* ---------- hero ---------- */
+
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    padding: 128px 0 74px;
+    overflow: hidden;
+  }
+
+  #heroEtch {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 2.4s linear .3s;
+  }
+
+  .hero.in #heroEtch { opacity: 1; }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: radial-gradient(130% 100% at 20% 45%, rgba(11, 10, 9, .5) 30%, rgba(11, 10, 9, .9) 100%);
+  }
+
+  .hero-grid {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: clamp(24px, 5vw, 70px);
+    width: 100%;
+  }
+
+  .hero .eyebrow {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 26px;
+    font-size: var(--fs-label);
+  }
+
+  .hero .eyebrow .bar {
+    width: clamp(28px, 6vw, 70px);
+    height: 1px;
+    margin-top: .72em;
+    flex: none;
+    background: var(--brass);
+  }
+
+  h1 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: var(--fs-display);
+    line-height: .96;
+    letter-spacing: -.005em;
+    text-transform: uppercase;
+    margin: 0 0 28px;
+  }
+
+  h1 .sig {
+    font-style: italic;
+    color: var(--brass-lit);
+    letter-spacing: .005em;
+  }
+
+  .hero .lead { margin-bottom: 36px; max-width: 42ch; }
+
+  .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+
+  .oval-mark { width: clamp(150px, 22vw, 280px); height: auto; }
+
+  .oval-mark .ring {
+    fill: none;
+    stroke: var(--brass);
+    stroke-width: 1;
+    stroke-dasharray: 640;
+    stroke-dashoffset: 640;
+    transition: stroke-dashoffset 2.6s var(--ease) .4s;
+  }
+
+  .hero.in .oval-mark .ring { stroke-dashoffset: 0; }
+
+  .oval-mark .ring2 { stroke: var(--rule); transition-delay: .7s; }
+  .oval-mark .gl { stroke: var(--brass-lit); stroke-width: 1.1; fill: none; }
+  .oval-mark .fillbone { fill: var(--bone); }
+  .oval-mark .fillbrass { fill: var(--brass); }
+
+  .scroll-cue {
+    position: absolute;
+    left: var(--gut);
+    bottom: 30px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: .58rem;
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: var(--mute);
+  }
+
+  .scroll-cue .ln {
+    display: block;
+    width: 46px;
+    height: 1px;
+    background: linear-gradient(90deg, var(--brass), transparent);
+    animation: slide 2.6s var(--ease) infinite;
+  }
+
+  @keyframes slide {
+    0% { transform: translateX(0); opacity: 0; }
+    35% { opacity: 1; }
+    100% { transform: translateX(22px); opacity: 0; }
+  }
+
+  /* ---------- section frame ---------- */
+
+  section { position: relative; }
+
+  .band { padding-block: var(--pad-y); }
+
+  .band-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+    margin-bottom: clamp(44px, 6vw, 78px);
+  }
+
+  .band-head .top {
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  /* ---------- 01 · audience ---------- */
+
+  .aud {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-top: 1px solid var(--rule);
+  }
+
+  .aud article {
+    padding: 34px clamp(18px, 2.4vw, 34px) 40px;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+    transition: background .5s var(--ease);
+  }
+
+  .aud article:first-child { padding-left: 0; }
+  .aud article:last-child { border-right: 0; padding-right: 0; }
+  .aud article:hover { background: rgba(168, 131, 75, .045); }
+
+  .aud .n {
+    font-family: var(--display);
+    font-size: .78rem;
+    color: var(--brass);
+    font-variant-numeric: tabular-nums;
+    display: block;
+    margin-bottom: 22px;
+  }
+
+  .aud h3 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(1.15rem, 1.9vw, 1.55rem);
+    line-height: 1.15;
+    text-transform: uppercase;
+    letter-spacing: .02em;
+    color: var(--bone);
+    margin: 0 0 14px;
+  }
+
+  .aud p { margin: 0; color: var(--mute); line-height: 1.75; }
+
+  /* ---------- 02 · pain (inverted paper spread) ---------- */
+
+  .paper {
+    background: var(--paper);
+    color: var(--ink);
+    position: relative;
+    overflow: hidden;
+  }
+
+  #painEtch {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    opacity: .55;
+  }
+
+  .paper > .wrap { position: relative; z-index: 1; }
+  .paper .label { color: var(--brass-deep); }
+  .paper .folio { color: var(--brass-deep); }
+  .paper .lead { color: #4E483E; }
+  .paper .hair { background: var(--rule-ink); }
+
+  .pain-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: clamp(28px, 5vw, 76px);
+  }
+
+  .pain {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: clamp(16px, 2.2vw, 28px);
+    align-items: start;
+    padding: 30px 0;
+    border-bottom: 1px solid var(--rule-ink);
+  }
+
+  .pain .q {
+    font-family: var(--display);
+    font-size: clamp(2rem, 4.4vw, 3.4rem);
+    line-height: .78;
+    color: var(--paper-deep);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .pain p {
+    margin: 0;
+    font-size: clamp(.95rem, 1.25vw, 1.1rem);
+    line-height: 1.6;
+    color: #26221C;
+    max-width: 34ch;
+  }
+
+  .pain-foot {
+    margin-top: clamp(40px, 6vw, 70px);
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .pain-foot .verdict {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: clamp(1.2rem, 2.6vw, 2rem);
+    line-height: 1.25;
+    color: var(--ink);
+    margin: 0;
+    max-width: 30ch;
+  }
+
+  /* ---------- 03 · services ---------- */
+
+  .svc { border-top: 1px solid var(--rule); }
+
+  .svc-row {
+    display: grid;
+    grid-template-columns: 4.5rem minmax(0, 1.05fr) minmax(0, 1.35fr) auto;
+    align-items: baseline;
+    gap: clamp(14px, 3vw, 44px);
+    padding: clamp(26px, 3.4vw, 42px) 0;
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+    transition: padding-left .55s var(--ease);
+  }
+
+  .svc-row::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--brass);
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform .55s var(--ease);
+  }
+
+  .svc-row:hover { padding-left: 22px; }
+  .svc-row:hover::before { transform: scaleY(1); transform-origin: top; }
+
+  .svc-row .n {
+    font-family: var(--display);
+    font-size: .82rem;
+    color: var(--brass);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .svc-row h3 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(1.3rem, 2.7vw, 2.15rem);
+    line-height: 1.06;
+    text-transform: uppercase;
+    letter-spacing: .01em;
+    color: var(--bone);
+    margin: 0;
+    transition: color .35s var(--ease);
+  }
+
+  .svc-row:hover h3 { color: var(--brass-lit); }
+  .svc-row p { margin: 0; color: var(--mute); line-height: 1.7; }
+
+  .svc-row .flag {
+    font-size: .56rem;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--brass);
+    border: 1px solid var(--rule);
+    padding: 6px 11px;
+    white-space: nowrap;
+  }
+
+  .svc-note {
+    margin-top: 26px;
+    font-size: .68rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--mute);
+  }
+
+  /* ---------- 04 · visit ---------- */
+
+  .visit { position: relative; overflow: hidden; background: var(--soot); }
+
+  #visitEtch {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    opacity: .75;
+  }
+
+  .visit > .wrap { position: relative; z-index: 1; }
+
+  .visit-grid {
+    display: grid;
+    grid-template-columns: minmax(0, .88fr) auto minmax(0, 1.12fr);
+    gap: clamp(28px, 4vw, 56px);
+    align-items: stretch;
+  }
+
+  .visit-col { display: flex; flex-direction: column; align-items: flex-start; }
+  .visit-col .wa { margin-top: 4px; }
+
+  .pole {
+    width: 12px;
+    border-radius: 6px;
+    background-image: repeating-linear-gradient(
+      -48deg,
+      #B4272C 0 9px,
+      #E8E2D6 9px 18px,
+      #1D3D6E 18px 27px,
+      #E8E2D6 27px 36px
+    );
+    background-size: 100% 36px;
+    box-shadow: inset -3px 0 6px rgba(0, 0, 0, .55), inset 3px 0 5px rgba(255, 255, 255, .25), 0 0 22px rgba(168, 131, 75, .16);
+    animation: helix 4.5s linear infinite;
+    justify-self: center;
+  }
+
+  @keyframes helix { to { background-position: 0 -36px; } }
+
+  .info dt {
+    font-size: var(--fs-label);
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin-bottom: 8px;
+  }
+
+  .info dd {
+    margin: 0 0 30px;
+    font-family: var(--display);
+    font-size: clamp(1.05rem, 1.9vw, 1.4rem);
+    line-height: 1.45;
+    color: var(--bone);
+  }
+
+  .info dd small {
+    display: block;
+    font-family: var(--sans);
+    font-size: .82rem;
+    color: var(--mute);
+    letter-spacing: .04em;
+    margin-top: 6px;
+  }
+
+  .hours { display: grid; gap: 0; }
+
+  .hours .row {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--rule);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .hours .row span:first-child {
+    font-size: .7rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--bone);
+  }
+
+  .hours .row .dots { flex: 1; border-bottom: 1px dotted rgba(168, 131, 75, .35); transform: translateY(-4px); }
+  .hours .row .t { font-family: var(--display); color: var(--brass-lit); font-size: .98rem; }
+  .hours .row.closed .t { color: var(--mute); font-style: italic; }
+
+  /* ---------- closing ---------- */
+
+  .close { padding-block: clamp(90px, 13vw, 180px); text-align: center; }
+
+  .close h2 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(2.1rem, 6.4vw, 5rem);
+    line-height: .98;
+    text-transform: uppercase;
+    margin: 0 0 20px;
+  }
+
+  .close h2 em { font-style: italic; color: var(--brass-lit); }
+
+  .close .lead { margin: 0 auto 38px; text-align: center; }
+  .close .wa { margin-inline: auto; }
+
+  footer {
+    border-top: 1px solid var(--rule);
+    padding: 30px 0 40px;
+  }
+
+  .foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-size: .62rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--mute);
+  }
+
+  /* ---------- sticky mobile CTA ---------- */
+
+  .dock {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 85;
+    display: none;
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+    background: rgba(11, 10, 9, .96);
+    border-top: 1px solid var(--rule);
+  }
+
+  .dock .wa { width: 100%; justify-content: center; }
+
+  /* ---------- responsive ---------- */
+
+  @media (max-width: 980px) {
+    .aud { grid-template-columns: 1fr; }
+    .aud article { border-right: 0; padding-inline: 0; }
+    .pain-grid { grid-template-columns: 1fr; }
+    .visit-grid { grid-template-columns: 1fr; row-gap: 34px; }
+    .pole { width: 100%; height: 12px; background-size: 36px 100%; animation-name: helixH; }
+    @keyframes helixH { to { background-position: -36px 0; } }
+    .svc-row { grid-template-columns: 3rem minmax(0, 1fr); row-gap: 12px; }
+    .svc-row .flag { grid-column: 2; justify-self: start; }
+  }
+
+  @media (max-width: 720px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .oval-mark { display: none; }
+    .hero { padding-bottom: 110px; }
+    .scroll-cue { display: none; }
+    .nav .nav-right .wa { display: none; }
+    .dock { display: block; }
+    .brand .nm { font-size: .66rem; letter-spacing: .2em; }
+    .hero .eyebrow .label { letter-spacing: .2em; }
+    .hero-cta { display: grid; grid-template-columns: 1fr; }
+    .hero-cta .wa { justify-content: center; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .rv, .mask > *, .hair, .oval-mark .ring { transition: none !important; }
+    .rv { opacity: 1; transform: none; }
+    .mask > * { transform: none; }
+    .hair { transform: scaleX(1); }
+    .oval-mark .ring { stroke-dashoffset: 0; }
+    .pole, .scroll-cue .ln { animation: none; }
+    #heroEtch { transition: none; opacity: 1; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 26 32" aria-hidden="true">
+      <ellipse cx="13" cy="16" rx="11.4" ry="15" fill="none" stroke="#A8834B" stroke-width="1"/>
+      <rect x="10" y="9" width="6" height="14" rx="3" fill="none" stroke="#A8834B" stroke-width=".9"/>
+      <path d="M10 12.5 L16 10 M10 16 L16 13.5 M10 19.5 L16 17 M10 23 L16 20.5" stroke="#A8834B" stroke-width=".7"/>
+    </svg>
+    <div class="nm">Professional Barber<i data-es="Vega Alta · Puerto Rico" data-en="Vega Alta · Puerto Rico">Vega Alta · Puerto Rico</i></div>
+  </div>
+  <div class="nav-right">
+    <div class="lang" role="group" aria-label="Idioma / Language">
+      <button type="button" class="on" data-lang="es">ES</button>
+      <button type="button" data-lang="en">EN</button>
+    </div>
+    <a class="wa sm" href="#reservar" data-wa>
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm5.5 14.1c-.2.6-1.2 1.2-1.7 1.2-.5.1-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.6-2.6-1.1-4.3-3.8-4.5-4-.1-.2-1-1.4-1-2.6s.6-1.8.9-2.1c.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.2 0 .4-.1.5l-.4.5c-.1.1-.3.3-.1.6.1.3.6 1.1 1.4 1.8 1 .9 1.8 1.1 2 1.2.3.1.4.1.6-.1l.7-.8c.2-.2.4-.2.6-.1l1.8.9c.2.1.4.2.4.3.1.2.1.6-.1 1.3Z"/></svg>
+      <span data-es="Reservar" data-en="Book now">Reservar</span>
+    </a>
+  </div>
+</nav>
+
+<header class="hero" id="hero">
+  <canvas id="heroEtch" aria-hidden="true"></canvas>
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow rv">
+        <span class="bar"></span>
+        <span class="label" data-es="Barbería de precisión · Est. Puerto Rico" data-en="Precision barbering · Est. Puerto Rico">Barbería de precisión · Est. Puerto Rico</span>
+      </div>
+
+      <h1 id="h1">
+        <span class="mask" style="--d:60ms"><span data-es="Tu imagen" data-en="Your image">Tu imagen</span></span>
+        <span class="mask" style="--d:150ms"><span data-es="no es un juego." data-en="isn't a game.">no es un juego.</span></span>
+        <span class="mask" style="--d:240ms"><span class="sig" data-es="Es tu firma." data-en="It's your signature.">Es tu firma.</span></span>
+      </h1>
+
+      <p class="lead rv" style="--d:420ms" data-es="Transforma tu imagen y proyecta la confianza que mereces. Barberos especializados que entienden tu estilo y elevan tu presencia." data-en="Transform your image and project the confidence you deserve. Specialized barbers who understand your style and elevate your presence.">Transforma tu imagen y proyecta la confianza que mereces. Barberos especializados que entienden tu estilo y elevan tu presencia.</p>
+
+      <div class="hero-cta rv" style="--d:540ms">
+        <a class="wa" href="#reservar" data-wa>
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm5.5 14.1c-.2.6-1.2 1.2-1.7 1.2-.5.1-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.6-2.6-1.1-4.3-3.8-4.5-4-.1-.2-1-1.4-1-2.6s.6-1.8.9-2.1c.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.2 0 .4-.1.5l-.4.5c-.1.1-.3.3-.1.6.1.3.6 1.1 1.4 1.8 1 .9 1.8 1.1 2 1.2.3.1.4.1.6-.1l.7-.8c.2-.2.4-.2.6-.1l1.8.9c.2.1.4.2.4.3.1.2.1.6-.1 1.3Z"/></svg>
+          <span data-es="Reserva tu cita" data-en="Book your appointment">Reserva tu cita</span>
+        </a>
+        <a class="wa ghost" href="#servicios">
+          <span data-es="Ver servicios" data-en="See services">Ver servicios</span>
+        </a>
+      </div>
+    </div>
+
+    <svg class="oval-mark" viewBox="0 0 200 250" aria-hidden="true">
+      <ellipse class="ring ring2" cx="100" cy="122" rx="95" ry="120"/>
+      <ellipse class="ring" cx="100" cy="122" rx="86" ry="111"/>
+      <g class="gl">
+        <rect x="87" y="44" width="26" height="78" rx="13"/>
+        <path d="M87 58 L113 48 M87 73 L113 63 M87 88 L113 78 M87 103 L113 93 M87 118 L113 108"/>
+        <path d="M82 40 h36 M82 126 h36"/>
+      </g>
+      <path class="fillbrass" d="M60 144 h80 v1.6 h-80 Z"/>
+      <text class="fillbone" x="100" y="172" text-anchor="middle" font-family="Didot, 'Bodoni MT', Georgia, serif" font-size="20" letter-spacing="3.2">BARBER</text>
+      <text class="fillbrass" x="100" y="196" text-anchor="middle" font-family="Didot, 'Bodoni MT', Georgia, serif" font-size="20" letter-spacing="3.2">SHOP</text>
+      <path class="gl" d="M58 216 L96 210 M104 210 L142 216" stroke-width=".9"/>
+    </svg>
+  </div>
+
+  <div class="scroll-cue">
+    <span class="ln"></span>
+    <span data-es="Desliza" data-en="Scroll">Desliza</span>
+  </div>
+</header>
+
+<main>
+  <!-- 01 -->
+  <section class="band" id="para-quien">
+    <div class="wrap">
+      <div class="band-head">
+        <div class="top">
+          <span class="folio">01 / 04</span>
+          <span class="label" data-es="El cliente" data-en="The client">El cliente</span>
+        </div>
+        <hr class="hair">
+        <h2 class="head">
+          <span class="mask"><span data-es="Para quién" data-en="Who this is">Para quién</span></span>
+          <span class="mask" style="--d:90ms"><em data-es="es esto" data-en="built for">es esto</em></span>
+        </h2>
+        <p class="lead rv" style="--d:200ms" data-es="Diseñado para hombres que valoran su imagen y buscan resultados profesionales." data-en="Designed for men who value their image and want professional results.">Diseñado para hombres que valoran su imagen y buscan resultados profesionales.</p>
+      </div>
+
+      <div class="aud">
+        <article class="rv">
+          <span class="n">I</span>
+          <h3 data-es="Profesionales" data-en="Professionals">Profesionales</h3>
+          <p data-es="Ejecutivos y empresarios que necesitan mantener una imagen impecable para proyectar confianza y éxito en su carrera." data-en="Executives and business owners who need an impeccable image to project confidence and success in their careers.">Ejecutivos y empresarios que necesitan mantener una imagen impecable para proyectar confianza y éxito en su carrera.</p>
+        </article>
+        <article class="rv" style="--d:120ms">
+          <span class="n">II</span>
+          <h3 data-es="Padres de familia" data-en="Fathers">Padres de familia</h3>
+          <p data-es="Hombres que buscan verse bien para sus familias y mantener una apariencia cuidada sin sacrificar tiempo valioso." data-en="Men who want to look good for their families and stay well-groomed without sacrificing valuable time.">Hombres que buscan verse bien para sus familias y mantener una apariencia cuidada sin sacrificar tiempo valioso.</p>
+        </article>
+        <article class="rv" style="--d:240ms">
+          <span class="n">III</span>
+          <h3 data-es="Clientes premium" data-en="Premium clients">Clientes premium</h3>
+          <p data-es="Caballeros que valoran la calidad, el detalle y la experiencia de un servicio de barbería de alto nivel." data-en="Gentlemen who value the quality, the detail and the experience of high-end barbering.">Caballeros que valoran la calidad, el detalle y la experiencia de un servicio de barbería de alto nivel.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 · inverted spread -->
+  <section class="band paper" id="identificas">
+    <canvas id="painEtch" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <div class="band-head">
+        <div class="top">
+          <span class="folio">02 / 04</span>
+          <span class="label" data-es="El diagnóstico" data-en="The diagnosis">El diagnóstico</span>
+        </div>
+        <hr class="hair">
+        <h2 class="head">
+          <span class="mask"><span data-es="Te identificas" data-en="Does this sound">Te identificas</span></span>
+          <span class="mask" style="--d:90ms"><em data-es="con esto" data-en="familiar">con esto</em></span>
+        </h2>
+        <p class="lead rv" style="--d:200ms" data-es="Sabemos exactamente lo que estás enfrentando." data-en="We know exactly what you're up against.">Sabemos exactamente lo que estás enfrentando.</p>
+      </div>
+
+      <div class="pain-grid">
+        <div class="pain rv">
+          <span class="q">01</span>
+          <p data-es="Te sientes inseguro con tu apariencia y sabes que tu imagen no refleja tu verdadero potencial." data-en="You feel unsure about your appearance, and you know your image doesn't reflect your real potential.">Te sientes inseguro con tu apariencia y sabes que tu imagen no refleja tu verdadero potencial.</p>
+        </div>
+        <div class="pain rv" style="--d:100ms">
+          <span class="q">02</span>
+          <p data-es="Has perdido oportunidades profesionales o personales porque tu look no transmite la confianza que necesitas." data-en="You've lost professional or personal opportunities because your look doesn't carry the confidence you need.">Has perdido oportunidades profesionales o personales porque tu look no transmite la confianza que necesitas.</p>
+        </div>
+        <div class="pain rv" style="--d:200ms">
+          <span class="q">03</span>
+          <p data-es="No tienes tiempo para buscar un barbero de confianza y terminas conformándote con resultados mediocres." data-en="You have no time to find a barber you trust, so you settle for mediocre results.">No tienes tiempo para buscar un barbero de confianza y terminas conformándote con resultados mediocres.</p>
+        </div>
+        <div class="pain rv" style="--d:300ms">
+          <span class="q">04</span>
+          <p data-es="Quieres verte bien pero no sabes qué estilo te favorece ni cómo mantener tu imagen actualizada." data-en="You want to look good but you don't know which style suits you or how to keep your image current.">Quieres verte bien pero no sabes qué estilo te favorece ni cómo mantener tu imagen actualizada.</p>
+        </div>
+      </div>
+
+      <div class="pain-foot rv" style="--d:380ms">
+        <p class="verdict" data-es="Ninguna de estas se arregla con una silla cualquiera." data-en="None of these gets fixed in just any chair.">Ninguna de estas se arregla con una silla cualquiera.</p>
+        <a class="wa" href="#reservar" data-wa>
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm5.5 14.1c-.2.6-1.2 1.2-1.7 1.2-.5.1-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.6-2.6-1.1-4.3-3.8-4.5-4-.1-.2-1-1.4-1-2.6s.6-1.8.9-2.1c.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.2 0 .4-.1.5l-.4.5c-.1.1-.3.3-.1.6.1.3.6 1.1 1.4 1.8 1 .9 1.8 1.1 2 1.2.3.1.4.1.6-.1l.7-.8c.2-.2.4-.2.6-.1l1.8.9c.2.1.4.2.4.3.1.2.1.6-.1 1.3Z"/></svg>
+          <span data-es="Hablemos" data-en="Let's talk">Hablemos</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 -->
+  <section class="band" id="servicios">
+    <div class="wrap">
+      <div class="band-head">
+        <div class="top">
+          <span class="folio">03 / 04</span>
+          <span class="label" data-es="La solución" data-en="The solution">La solución</span>
+        </div>
+        <hr class="hair">
+        <h2 class="head">
+          <span class="mask"><span data-es="La solución" data-en="The professional">La solución</span></span>
+          <span class="mask" style="--d:90ms"><em data-es="profesional" data-en="solution">profesional</em></span>
+        </h2>
+        <p class="lead rv" style="--d:200ms" data-es="Servicios especializados que transforman tu imagen." data-en="Specialized services that transform your image.">Servicios especializados que transforman tu imagen.</p>
+      </div>
+
+      <div class="svc">
+        <article class="svc-row rv">
+          <span class="n">01</span>
+          <h3 data-es="Cortes modernos" data-en="Modern cuts">Cortes modernos</h3>
+          <p data-es="Estilos contemporáneos adaptados a tu personalidad y tipo de rostro, desde fades hasta cortes clásicos renovados." data-en="Contemporary styles adapted to your personality and face shape, from fades to renewed classic cuts.">Estilos contemporáneos adaptados a tu personalidad y tipo de rostro, desde fades hasta cortes clásicos renovados.</p>
+          <span class="flag" data-es="En salón" data-en="In shop">En salón</span>
+        </article>
+
+        <article class="svc-row rv" style="--d:100ms">
+          <span class="n">02</span>
+          <h3 data-es="Diseño de barba" data-en="Beard design">Diseño de barba</h3>
+          <p data-es="Perfilado profesional, arreglo y diseño de barba que complementa perfectamente tu estilo y facciones." data-en="Professional shaping, trimming and beard design that complements your style and features.">Perfilado profesional, arreglo y diseño de barba que complementa perfectamente tu estilo y facciones.</p>
+          <span class="flag" data-es="En salón" data-en="In shop">En salón</span>
+        </article>
+
+        <article class="svc-row rv" style="--d:200ms">
+          <span class="n">03</span>
+          <h3 data-es="Micropigmentación capilar" data-en="Scalp micropigmentation">Micropigmentación capilar</h3>
+          <p data-es="Solución avanzada para densidad capilar y cobertura de áreas con pérdida de cabello." data-en="Advanced solution for hair density and coverage of areas with hair loss.">Solución avanzada para densidad capilar y cobertura de áreas con pérdida de cabello.</p>
+          <span class="flag" data-es="Cita previa" data-en="By appointment">Cita previa</span>
+        </article>
+
+        <article class="svc-row rv" style="--d:300ms">
+          <span class="n">04</span>
+          <h3 data-es="Servicio a domicilio" data-en="At-home service">Servicio a domicilio</h3>
+          <p data-es="Llevamos nuestro servicio premium hasta tu hogar u oficina para tu máxima comodidad." data-en="We bring our premium service to your home or office for maximum convenience.">Llevamos nuestro servicio premium hasta tu hogar u oficina para tu máxima comodidad.</p>
+          <span class="flag" data-es="A domicilio" data-en="On location">A domicilio</span>
+        </article>
+      </div>
+
+      <p class="svc-note rv" data-es="Precios y duración se confirman al reservar" data-en="Pricing and duration confirmed when you book">Precios y duración se confirman al reservar</p>
+    </div>
+  </section>
+
+  <!-- 04 -->
+  <section class="band visit" id="visitanos">
+    <canvas id="visitEtch" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <div class="band-head">
+        <div class="top">
+          <span class="folio">04 / 04</span>
+          <span class="label" data-es="El salón" data-en="The shop">El salón</span>
+        </div>
+        <hr class="hair">
+        <h2 class="head">
+          <span class="mask"><span data-es="Visítanos" data-en="Visit us">Visítanos</span></span>
+        </h2>
+      </div>
+
+      <div class="visit-grid">
+        <div class="visit-col">
+        <dl class="info rv">
+          <dt data-es="Dirección" data-en="Address">Dirección</dt>
+          <dd>
+            Cll 9, Dorado<br>Vega Alta, PR 00646
+            <small data-es="Dirección por confirmar con el cliente" data-en="Address to be confirmed with the client">Dirección por confirmar con el cliente</small>
+          </dd>
+          <dt data-es="WhatsApp" data-en="WhatsApp">WhatsApp</dt>
+          <dd>
+            +1 (787) 000&#8209;0000
+            <small data-es="Número por confirmar" data-en="Number to be confirmed">Número por confirmar</small>
+          </dd>
+        </dl>
+
+          <a class="wa ghost rv" style="--d:70ms" href="https://maps.google.com/?q=Vega+Alta+Puerto+Rico" target="_blank" rel="noopener">
+            <span data-es="Cómo llegar" data-en="Get directions">Cómo llegar</span>
+          </a>
+        </div>
+
+        <div class="pole" aria-hidden="true"></div>
+
+        <div class="rv" style="--d:140ms">
+          <div class="hours">
+            <div class="row"><span data-es="Lunes" data-en="Monday">Lunes</span><span class="dots"></span><span class="t">9:00 – 18:00</span></div>
+            <div class="row"><span data-es="Martes" data-en="Tuesday">Martes</span><span class="dots"></span><span class="t">9:00 – 18:00</span></div>
+            <div class="row"><span data-es="Miércoles" data-en="Wednesday">Miércoles</span><span class="dots"></span><span class="t">9:00 – 18:00</span></div>
+            <div class="row"><span data-es="Jueves" data-en="Thursday">Jueves</span><span class="dots"></span><span class="t">9:00 – 19:00</span></div>
+            <div class="row"><span data-es="Viernes" data-en="Friday">Viernes</span><span class="dots"></span><span class="t">9:00 – 19:00</span></div>
+            <div class="row"><span data-es="Sábado" data-en="Saturday">Sábado</span><span class="dots"></span><span class="t">8:00 – 17:00</span></div>
+            <div class="row closed"><span data-es="Domingo" data-en="Sunday">Domingo</span><span class="dots"></span><span class="t" data-es="Cerrado" data-en="Closed">Cerrado</span></div>
+          </div>
+          <p class="svc-note" data-es="Horario de ejemplo — pendiente del cliente" data-en="Sample hours — pending from the client">Horario de ejemplo — pendiente del cliente</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- closing -->
+  <section class="close wrap" id="reservar">
+    <h2>
+      <span class="mask"><span data-es="La silla" data-en="The chair">La silla</span></span>
+      <span class="mask" style="--d:90ms"><em data-es="está lista." data-en="is ready.">está lista.</em></span>
+    </h2>
+    <p class="lead rv" style="--d:200ms" data-es="Escríbenos por WhatsApp con el servicio y el día que prefieres. Te confirmamos el turno en minutos." data-en="Message us on WhatsApp with the service and the day you prefer. We'll confirm your slot in minutes.">Escríbenos por WhatsApp con el servicio y el día que prefieres. Te confirmamos el turno en minutos.</p>
+    <a class="wa rv" style="--d:300ms" href="#" data-wa="link">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm5.5 14.1c-.2.6-1.2 1.2-1.7 1.2-.5.1-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.6-2.6-1.1-4.3-3.8-4.5-4-.1-.2-1-1.4-1-2.6s.6-1.8.9-2.1c.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.2 0 .4-.1.5l-.4.5c-.1.1-.3.3-.1.6.1.3.6 1.1 1.4 1.8 1 .9 1.8 1.1 2 1.2.3.1.4.1.6-.1l.7-.8c.2-.2.4-.2.6-.1l1.8.9c.2.1.4.2.4.3.1.2.1.6-.1 1.3Z"/></svg>
+      <span data-es="Reserva tu cita ahora" data-en="Book your appointment now">Reserva tu cita ahora</span>
+    </a>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>Professional Barber · Vega Alta, PR</span>
+    <span data-es="Propuesta de diseño · v1" data-en="Design proposal · v1">Propuesta de diseño · v1</span>
+  </div>
+</footer>
+
+<div class="dock">
+  <a class="wa" href="#" data-wa="link">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm5.5 14.1c-.2.6-1.2 1.2-1.7 1.2-.5.1-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.6-2.6-1.1-4.3-3.8-4.5-4-.1-.2-1-1.4-1-2.6s.6-1.8.9-2.1c.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.2 0 .4-.1.5l-.4.5c-.1.1-.3.3-.1.6.1.3.6 1.1 1.4 1.8 1 .9 1.8 1.1 2 1.2.3.1.4.1.6-.1l.7-.8c.2-.2.4-.2.6-.1l1.8.9c.2.1.4.2.4.3.1.2.1.6-.1 1.3Z"/></svg>
+    <span data-es="Reserva tu cita" data-en="Book your appointment">Reserva tu cita</span>
+  </a>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- WhatsApp: prefilled message so the barber only replies yes/no ---------- */
+
+  var WA_NUMBER = '17870000000'; // <- placeholder, replace with the shop's real number
+  var WA_TEXT = {
+    es: 'Hola Professional Barber. Quisiera reservar una cita.\n\nServicio: \nBarbero: \nDía y hora que prefiero: \n\nGracias.',
+    en: 'Hi Professional Barber. I would like to book an appointment.\n\nService: \nBarber: \nPreferred day and time: \n\nThank you.'
+  };
+
+  function waHref(lang) {
+    return 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(WA_TEXT[lang]);
+  }
+
+  /* ---------- language ---------- */
+
+  var lang = 'es';
+  var nodes = document.querySelectorAll('[data-es]');
+  var waLinks = document.querySelectorAll('[data-wa]');
+  var langBtns = document.querySelectorAll('.lang button');
+
+  function setLang(next) {
+    lang = next;
+    document.documentElement.lang = next;
+    for (var i = 0; i < nodes.length; i++) {
+      var t = nodes[i].getAttribute('data-' + next);
+      if (t !== null) nodes[i].textContent = t;
+    }
+    for (var j = 0; j < waLinks.length; j++) {
+      if (waLinks[j].getAttribute('data-wa') === 'link') waLinks[j].href = waHref(next);
+    }
+    for (var k = 0; k < langBtns.length; k++) {
+      langBtns[k].classList.toggle('on', langBtns[k].getAttribute('data-lang') === next);
+    }
+  }
+
+  for (var b = 0; b < langBtns.length; b++) {
+    langBtns[b].addEventListener('click', function () {
+      setLang(this.getAttribute('data-lang'));
+    });
+  }
+
+  setLang('es');
+
+  /* ---------- scroll reveal ---------- */
+
+  var targets = document.querySelectorAll('.band-head, .aud article, .pain, .pain-foot, .svc-row, .svc-note, .info, .visit-grid > div, .close, .hero');
+
+  if (reduced || !('IntersectionObserver' in window)) {
+    for (var r = 0; r < targets.length; r++) targets[r].classList.add('in');
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.14, rootMargin: '0px 0px -8% 0px' });
+
+    for (var t = 0; t < targets.length; t++) io.observe(targets[t]);
+    requestAnimationFrame(function () {
+      document.getElementById('hero').classList.add('in');
+    });
+  }
+
+  /* ---------- nav background on scroll ---------- */
+
+  var nav = document.getElementById('nav');
+  var onScroll = function () { nav.classList.toggle('solid', window.scrollY > 40); };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* ---------- engraved plate texture (echoes the shop's etched logo) ---------- */
+
+  function etch(canvas, cfg) {
+    if (!canvas) return;
+    var w = canvas.clientWidth;
+    var h = canvas.clientHeight;
+    if (!w || !h) return;
+
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+
+    var ctx = canvas.getContext('2d');
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+    ctx.lineCap = 'round';
+
+    var cx = w * cfg.cx;
+    var cy = h * cfg.cy;
+    var reach = Math.max(w, h) * cfg.reach;
+    var step = cfg.step;
+    var segs = 34;
+
+    for (var d = -h; d < w + h; d += step) {
+      for (var i = 0; i < segs; i++) {
+        var t0 = i / segs;
+        var t1 = (i + 1) / segs;
+        var x0 = d + t0 * h, y0 = t0 * h;
+        var x1 = d + t1 * h, y1 = t1 * h;
+        var mx = (x0 + x1) / 2, my = (y0 + y1) / 2;
+
+        var dist = Math.sqrt((mx - cx) * (mx - cx) + (my - cy) * (my - cy)) / reach;
+        var a = 1 - dist;
+        if (a <= 0) continue;
+
+        a = Math.pow(a, cfg.falloff) * cfg.alpha * (0.72 + Math.random() * 0.28);
+        ctx.strokeStyle = 'rgba(' + cfg.rgb + ',' + a.toFixed(3) + ')';
+        ctx.lineWidth = 0.5 + a * cfg.weight;
+        ctx.beginPath();
+        ctx.moveTo(x0, y0);
+        ctx.lineTo(x1, y1);
+        ctx.stroke();
+      }
+    }
+  }
+
+  function paint() {
+    etch(document.getElementById('heroEtch'), {
+      cx: 0.62, cy: 0.42, reach: 0.62, step: 6, alpha: 0.30, falloff: 1.7, weight: 1.7, rgb: '168,131,75'
+    });
+    etch(document.getElementById('painEtch'), {
+      cx: 0.86, cy: 0.16, reach: 0.72, step: 7, alpha: 0.16, falloff: 2.0, weight: 1.2, rgb: '126,95,47'
+    });
+    etch(document.getElementById('visitEtch'), {
+      cx: 0.14, cy: 0.78, reach: 0.66, step: 6, alpha: 0.22, falloff: 1.8, weight: 1.5, rgb: '168,131,75'
+    });
+  }
+
+  paint();
+
+  var rt;
+  window.addEventListener('resize', function () {
+    clearTimeout(rt);
+    rt = setTimeout(paint, 220);
+  });
+})();
+</script>
+</body>
+</html>
