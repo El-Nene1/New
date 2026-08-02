@@ -386,10 +386,40 @@
 
   .mark-wrap {
     position: relative;
-    width: clamp(150px, 18vw, 250px);
-    aspect-ratio: 200 / 250;
+    width: clamp(160px, 21vw, 300px);
     flex: none;
+    opacity: 0;
+    transform: translateY(16px) scale(.97);
+    transition: opacity 1.5s var(--ease) .35s, transform 1.7s var(--ease) .35s;
   }
+
+  .hero.in .mark-wrap { opacity: 1; transform: none; }
+
+  /* warm halo behind the artwork */
+  .mark-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -16% -22%;
+    z-index: 0;
+    pointer-events: none;
+    background: radial-gradient(52% 44% at 50% 40%, rgba(217, 169, 60, .2), transparent 72%);
+  }
+
+  /* the shop's own engraved lockup, feathered into the lacquer so it has no visible edge */
+  .mark-img {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    height: auto;
+    -webkit-mask-image: radial-gradient(ellipse 76% 80% at 50% 47%, #000 56%, transparent 100%);
+    mask-image: radial-gradient(ellipse 76% 80% at 50% 47%, #000 56%, transparent 100%);
+  }
+
+  /* shown only until the real artwork is dropped in */
+  .mark-fallback { position: relative; z-index: 1; aspect-ratio: 200 / 250; }
+  .mark-wrap.has-art .mark-fallback { display: none; }
+  .mark-wrap:not(.has-art) .mark-img { display: none; }
 
   .oval-mark { position: absolute; inset: 0; width: 100%; height: 100%; }
 
@@ -855,7 +885,11 @@
       </div>
     </div>
 
-    <div class="mark-wrap">
+    <div class="mark-wrap" id="markWrap">
+      <!-- drop the shop's engraved lockup at assets/logo.png and it takes over automatically -->
+      <img class="mark-img" id="markImg" src="assets/logo.png" alt="Professional Barber" width="751" height="1284" decoding="async">
+
+      <div class="mark-fallback">
       <svg class="oval-mark" viewBox="0 0 200 250" aria-hidden="true">
         <ellipse class="ring ring2" cx="100" cy="122" rx="95" ry="120"/>
         <ellipse class="ring" cx="100" cy="122" rx="86" ry="111"/>
@@ -868,6 +902,7 @@
         <path class="gl" d="M58 216 L96 210 M104 210 L142 216" stroke-width=".9"/>
       </svg>
       <span class="mark-pole" aria-hidden="true"></span>
+      </div>
     </div>
   </div>
 
@@ -1129,6 +1164,20 @@
   }
 
   setLang('es');
+
+  /* ---------- the shop's artwork, when present ---------- */
+
+  var markImg = document.getElementById('markImg');
+  var markWrap = document.getElementById('markWrap');
+
+  if (markImg && markWrap) {
+    var useArt = function () { markWrap.classList.add('has-art'); };
+    if (markImg.complete) {
+      if (markImg.naturalWidth > 0) useArt();
+    } else {
+      markImg.addEventListener('load', useArt);
+    }
+  }
 
   /* ---------- scroll reveal ---------- */
 
