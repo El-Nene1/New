@@ -54,11 +54,9 @@
 
     --ease: cubic-bezier(.16, 1, .3, 1);
 
-    /* Turns the shop's silver engraving into the page's gold.
-       Order matters: crush the near-black ground to true black FIRST, or the
-       tint lifts it into a visible brown box. Then sepia and saturate carry
-       the surviving line work to gold. */
-    --art-gold: brightness(.8) contrast(1.75) sepia(1) saturate(5.2) hue-rotate(-12deg) brightness(1.4);
+    /* The shop's artwork already arrives gold, so it needs no tinting — only
+       a light lift so its golds sit at the same intensity as the page's. */
+    --art-tune: contrast(1.05) saturate(1.08) brightness(1.03);
   }
 
   html { background: var(--jet); scroll-behavior: smooth; }
@@ -318,6 +316,7 @@
     align-items: center;
     padding: 126px 0 78px;
     overflow: hidden;
+    background-image: radial-gradient(132% 104% at 24% 46%, transparent 34%, rgba(6, 6, 10, .72) 100%);
   }
 
   .hero .glow {
@@ -346,9 +345,12 @@
 
   .hero.in #heroEtch { opacity: 1; }
 
+  /* Deliberately no z-index. Any value here would open a stacking context and
+     cut the artwork's `screen` blend off from the glow and texture painted
+     behind it, which brings the black box back. DOM order already puts this
+     above the glow and the canvas. */
   .hero-grid {
     position: relative;
-    z-index: 2;
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
@@ -390,16 +392,15 @@
 
   /* ---------- the mark ---------- */
 
+  /* No transform or opacity on this wrapper: either one would open a stacking
+     context and isolate the artwork's `screen` blend from the hero behind it,
+     which puts a black box back around the plaque. The reveal is animated on
+     the child instead. */
   .mark-wrap {
     position: relative;
     width: clamp(160px, 21vw, 300px);
     flex: none;
-    opacity: 0;
-    transform: translateY(16px) scale(.97);
-    transition: opacity 1.5s var(--ease) .35s, transform 1.7s var(--ease) .35s;
   }
-
-  .hero.in .mark-wrap { opacity: 1; transform: none; }
 
   /* warm halo behind the artwork */
   .mark-wrap::before {
@@ -412,24 +413,25 @@
   }
 
   /* the shop's own engraved lockup, feathered into the lacquer so it has no visible edge */
-  /* The lockup is recoloured live in the browser, the file untouched:
-     `screen` drops the artwork's black ground so nothing boxes it in, and the
-     filter chain turns its silver line work into the page's gold.
-     Swap --art-gold to change the metal. */
+  /* `screen` drops the artwork's black ground, so the plaque's ornamental
+     frame floats on the page and the hero's glow reads through the dark
+     areas of the illustration. No mask here — a radial fade would eat the
+     decorative corners, which are part of the mark. */
   .mark-img {
     position: relative;
-    z-index: 1;
     display: block;
     width: 100%;
     height: auto;
     mix-blend-mode: screen;
-    filter: var(--art-gold);
-    -webkit-mask-image: radial-gradient(ellipse 80% 84% at 50% 47%, #000 62%, transparent 100%);
-    mask-image: radial-gradient(ellipse 80% 84% at 50% 47%, #000 62%, transparent 100%);
+    filter: var(--art-tune);
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path 1.5s var(--ease) .3s;
   }
 
+  .hero.in .mark-img { clip-path: inset(0 0 0 0); }
+
   /* shown only until the real artwork is dropped in */
-  .mark-fallback { position: relative; z-index: 1; aspect-ratio: 200 / 250; }
+  .mark-fallback { position: relative; z-index: 1; aspect-ratio: 3 / 4; }
   .mark-wrap.has-art .mark-fallback { display: none; }
   .mark-wrap:not(.has-art) .mark-img { display: none; }
 
@@ -778,12 +780,11 @@
     height: 124%;
     width: auto;
     z-index: 0;
-    opacity: .16;
+    opacity: .24;
     pointer-events: none;
     mix-blend-mode: screen;
-    filter: var(--art-gold);
-    -webkit-mask-image: radial-gradient(ellipse 58% 60% at 50% 50%, #000 40%, transparent 100%);
-    mask-image: radial-gradient(ellipse 58% 60% at 50% 50%, #000 40%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 54% 44% at 50% 40%, #000 28%, transparent 100%);
+    mask-image: radial-gradient(ellipse 54% 44% at 50% 40%, #000 28%, transparent 100%);
   }
 
   .close > .inner { position: relative; z-index: 1; }
@@ -850,8 +851,10 @@
 
   @media (max-width: 720px) {
     .hero-grid { grid-template-columns: 1fr; }
-    .mark-wrap { display: none; }
-    .hero { padding-bottom: 112px; }
+    /* the plaque leads on mobile: below the buttons it collides with the
+       fixed booking bar, above the copy it reads as the shop's mark */
+    .mark-wrap { order: -1; width: min(132px, 34vw); margin: 0 auto 22px; }
+    .hero { padding: 108px 0 116px; }
     .scroll-cue { display: none; }
     .nav .nav-right .btn { display: none; }
     .dock { display: block; }
@@ -862,12 +865,13 @@
 
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    .rv, .mask > *, .hair, .oval-mark .ring, .mark-pole { transition: none !important; }
+    .rv, .mask > *, .hair, .oval-mark .ring, .mark-pole, .mark-img { transition: none !important; }
     .rv { opacity: 1; transform: none; }
     .mask > * { transform: none; }
     .hair { transform: scaleX(1); }
     .oval-mark .ring { stroke-dashoffset: 0; }
     .mark-pole { opacity: 1; }
+    .mark-img { clip-path: none; }
     .foil, .pole-tall, .mark-pole, .hero .glow, .scroll-cue .ln { animation: none; }
     #heroEtch { transition: none; opacity: 1; }
   }
@@ -928,7 +932,7 @@
 
     <div class="mark-wrap" id="markWrap">
       <!-- drop the shop's engraved lockup at assets/logo.png and it takes over automatically -->
-      <img class="mark-img" id="markImg" src="assets/logo.png" alt="Professional Barber" width="751" height="1284" decoding="async">
+      <img class="mark-img" id="markImg" src="assets/logo.webp" alt="Professional Barber — Cll 9, Dorado, Vega Alta" width="900" height="1200" fetchpriority="high" decoding="async">
 
       <div class="mark-fallback">
       <svg class="oval-mark" viewBox="0 0 200 250" aria-hidden="true">
@@ -1107,7 +1111,7 @@
             <dt data-es="Dirección" data-en="Address">Dirección</dt>
             <dd>
               Cll 9, Dorado<br>Vega Alta, PR 00646
-              <small data-es="Dirección por confirmar con el cliente" data-en="Address to be confirmed with the client">Dirección por confirmar con el cliente</small>
+              <small data-es="Tal como aparece en el rótulo del salón" data-en="As it appears on the shop's own sign">Tal como aparece en el rótulo del salón</small>
             </dd>
             <dt data-es="WhatsApp" data-en="WhatsApp">WhatsApp</dt>
             <dd>
@@ -1140,7 +1144,7 @@
 
   <!-- closing -->
   <section class="close" id="reservar">
-    <img class="close-art" id="closeArt" src="assets/logo.png" alt="" aria-hidden="true" decoding="async">
+    <img class="close-art" id="closeArt" src="assets/logo.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
     <div class="wrap inner">
     <svg class="razors rv" viewBox="0 0 400 26" aria-hidden="true">
       <line class="thin" x1="0" y1="13" x2="150" y2="13"/>
