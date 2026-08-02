@@ -53,6 +53,12 @@
     --wrap: 1260px;
 
     --ease: cubic-bezier(.16, 1, .3, 1);
+
+    /* Turns the shop's silver engraving into the page's gold.
+       Order matters: crush the near-black ground to true black FIRST, or the
+       tint lifts it into a visible brown box. Then sepia and saturate carry
+       the surviving line work to gold. */
+    --art-gold: brightness(.8) contrast(1.75) sepia(1) saturate(5.2) hue-rotate(-12deg) brightness(1.4);
   }
 
   html { background: var(--jet); scroll-behavior: smooth; }
@@ -406,14 +412,20 @@
   }
 
   /* the shop's own engraved lockup, feathered into the lacquer so it has no visible edge */
+  /* The lockup is recoloured live in the browser, the file untouched:
+     `screen` drops the artwork's black ground so nothing boxes it in, and the
+     filter chain turns its silver line work into the page's gold.
+     Swap --art-gold to change the metal. */
   .mark-img {
     position: relative;
     z-index: 1;
     display: block;
     width: 100%;
     height: auto;
-    -webkit-mask-image: radial-gradient(ellipse 76% 80% at 50% 47%, #000 56%, transparent 100%);
-    mask-image: radial-gradient(ellipse 76% 80% at 50% 47%, #000 56%, transparent 100%);
+    mix-blend-mode: screen;
+    filter: var(--art-gold);
+    -webkit-mask-image: radial-gradient(ellipse 80% 84% at 50% 47%, #000 62%, transparent 100%);
+    mask-image: radial-gradient(ellipse 80% 84% at 50% 47%, #000 62%, transparent 100%);
   }
 
   /* shown only until the real artwork is dropped in */
@@ -750,7 +762,36 @@
 
   /* ---------- closing ---------- */
 
-  .close { padding-block: clamp(96px, 13vw, 190px); text-align: center; }
+  .close {
+    position: relative;
+    padding-block: clamp(96px, 13vw, 190px);
+    text-align: center;
+    overflow: hidden;
+  }
+
+  /* the same artwork again, blown up as the ground the closing type sits inside */
+  .close-art {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 124%;
+    width: auto;
+    z-index: 0;
+    opacity: .16;
+    pointer-events: none;
+    mix-blend-mode: screen;
+    filter: var(--art-gold);
+    -webkit-mask-image: radial-gradient(ellipse 58% 60% at 50% 50%, #000 40%, transparent 100%);
+    mask-image: radial-gradient(ellipse 58% 60% at 50% 50%, #000 40%, transparent 100%);
+  }
+
+  .close > .inner { position: relative; z-index: 1; }
+
+  .razors { display: block; width: min(420px, 70%); height: 26px; margin: 0 auto 30px; }
+  .razors line, .razors path { stroke: var(--gold-2); fill: none; }
+  .razors .thin { stroke-width: 1; opacity: .45; }
+  .razors .blade { stroke-width: 1.2; }
 
   .close h2 {
     font-family: var(--display);
@@ -1098,7 +1139,15 @@
   </section>
 
   <!-- closing -->
-  <section class="close wrap" id="reservar">
+  <section class="close" id="reservar">
+    <img class="close-art" id="closeArt" src="assets/logo.png" alt="" aria-hidden="true" decoding="async">
+    <div class="wrap inner">
+    <svg class="razors rv" viewBox="0 0 400 26" aria-hidden="true">
+      <line class="thin" x1="0" y1="13" x2="150" y2="13"/>
+      <line class="thin" x1="250" y1="13" x2="400" y2="13"/>
+      <path class="blade" d="M163 21 L226 6 M163 21 L167 16 M226 6 L231 8"/>
+      <path class="blade" d="M237 21 L174 6 M237 21 L233 16 M174 6 L169 8"/>
+    </svg>
     <h2>
       <span class="mask"><span data-es="La silla" data-en="The chair">La silla</span></span>
       <span class="mask" style="--d:90ms"><em class="foil" data-es="está lista." data-en="is ready.">está lista.</em></span>
@@ -1108,6 +1157,7 @@
       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm5.5 14.1c-.2.6-1.2 1.2-1.7 1.2-.5.1-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.6-2.6-1.1-4.3-3.8-4.5-4-.1-.2-1-1.4-1-2.6s.6-1.8.9-2.1c.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.2 0 .4-.1.5l-.4.5c-.1.1-.3.3-.1.6.1.3.6 1.1 1.4 1.8 1 .9 1.8 1.1 2 1.2.3.1.4.1.6-.1l.7-.8c.2-.2.4-.2.6-.1l1.8.9c.2.1.4.2.4.3.1.2.1.6-.1 1.3Z"/></svg>
       <span data-es="Reserva tu cita ahora" data-en="Book your appointment now">Reserva tu cita ahora</span>
     </a>
+    </div>
   </section>
 </main>
 
@@ -1169,6 +1219,7 @@
 
   var markImg = document.getElementById('markImg');
   var markWrap = document.getElementById('markWrap');
+  var closeArt = document.getElementById('closeArt');
 
   if (markImg && markWrap) {
     var useArt = function () { markWrap.classList.add('has-art'); };
@@ -1177,6 +1228,13 @@
     } else {
       markImg.addEventListener('load', useArt);
     }
+  }
+
+  // the closing watermark simply removes itself until the artwork exists
+  if (closeArt) {
+    var dropArt = function () { closeArt.style.display = 'none'; };
+    closeArt.addEventListener('error', dropArt);
+    if (closeArt.complete && closeArt.naturalWidth === 0) dropArt();
   }
 
   /* ---------- scroll reveal ---------- */
