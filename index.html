@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Professional Barber — Barbería de precisión · Vega Alta, Puerto Rico</title>
+<title>Professional Barber Shop — Barbería de precisión · Vega Alta, Puerto Rico</title>
 <meta name="description" content="Barbería de precisión en Vega Alta, Puerto Rico. Cortes modernos, diseño de barba, micropigmentación capilar y servicio a domicilio. Reserva por WhatsApp.">
 <meta name="theme-color" content="#06060A">
-<meta property="og:title" content="Professional Barber — Vega Alta, Puerto Rico">
+<meta property="og:title" content="Professional Barber Shop — Vega Alta, Puerto Rico">
 <meta property="og:description" content="Tu imagen no es un juego. Es tu firma.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -84,6 +84,39 @@
   }
 
   .wrap { max-width: var(--wrap); margin-inline: auto; padding-inline: var(--gut); }
+
+  /* ---------- photography ----------
+     The shop's own photos, carrying atmosphere rather than detail. Each sits
+     under a scrim heavy enough that body copy keeps its contrast, and gets a
+     touch of warmth so the greys and teals in the originals don't fight the
+     gold. Originals are only ~736–1200px wide, so they are deliberately used
+     soft and dark — never as a sharp focal image. */
+
+  .photo {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .photo::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: var(--shot);
+    background-size: cover;
+    background-position: var(--shot-pos, center);
+    filter: saturate(.7) sepia(.24) brightness(.72) contrast(1.1);
+    opacity: var(--shot-op, .5);
+  }
+
+  .photo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--scrim, linear-gradient(90deg, var(--jet) 12%, rgba(6, 6, 10, .82) 48%, rgba(6, 6, 10, .58) 100%));
+  }
 
   /* ---------- gold foil ---------- */
 
@@ -200,7 +233,14 @@
   .nav.solid { background: rgba(6, 6, 10, .97); border-bottom-color: var(--rule); }
 
   .brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
-  .brand .mk { width: 27px; height: 33px; flex: none; }
+  .brand .mk {
+    width: 30px;
+    height: 40px;
+    flex: none;
+    object-fit: contain;
+    mix-blend-mode: screen;
+    filter: var(--art-tune);
+  }
 
   .brand .nm {
     font-family: var(--display);
@@ -623,6 +663,8 @@
 
   /* ---------- 03 services ---------- */
 
+  #servicios > .wrap { position: relative; z-index: 1; }
+
   .svc { border-top: 1px solid var(--rule); }
 
   .svc-row {
@@ -881,12 +923,8 @@
 
 <nav class="nav" id="nav">
   <div class="brand">
-    <svg class="mk" viewBox="0 0 27 33" aria-hidden="true">
-      <ellipse cx="13.5" cy="16.5" rx="12" ry="15.6" fill="none" stroke="#D9A93C" stroke-width="1"/>
-      <rect x="10.2" y="9" width="6.6" height="15" rx="3.3" fill="none" stroke="#D9A93C" stroke-width=".9"/>
-      <path d="M10.2 12.6 L16.8 10.2 M10.2 16.4 L16.8 14 M10.2 20.2 L16.8 17.8 M10.2 24 L16.8 21.6" stroke="#D9A93C" stroke-width=".7"/>
-    </svg>
-    <div class="nm foil">Professional Barber<i>Vega Alta · Puerto Rico</i></div>
+<img class="mk" src="assets/logo.webp" alt="" aria-hidden="true" width="900" height="1200" decoding="async">
+    <div class="nm foil">Professional Barber Shop<i>Vega Alta · Puerto Rico</i></div>
   </div>
   <div class="nav-right">
     <div class="lang" role="group" aria-label="Idioma / Language">
@@ -931,8 +969,8 @@
     </div>
 
     <div class="mark-wrap" id="markWrap">
-      <!-- drop the shop's engraved lockup at assets/logo.png and it takes over automatically -->
-      <img class="mark-img" id="markImg" src="assets/logo.webp" alt="Professional Barber — Cll 9, Dorado, Vega Alta" width="900" height="1200" fetchpriority="high" decoding="async">
+      <!-- the shop's own plaque; the drawn mark below stands in only if it fails to load -->
+      <img class="mark-img" id="markImg" src="assets/logo.webp" alt="Professional Barber Shop — Cll 9, Dorado, Vega Alta" width="900" height="1200" fetchpriority="high" decoding="async">
 
       <div class="mark-fallback">
       <svg class="oval-mark" viewBox="0 0 200 250" aria-hidden="true">
@@ -996,6 +1034,7 @@
 
   <!-- 02 velvet -->
   <section class="band velvet" id="identificas">
+    <div class="photo" aria-hidden="true" style="--shot:url('assets/bg-blade.webp'); --shot-pos:84% 46%; --shot-op:.34; --scrim:linear-gradient(90deg, rgba(133,16,31,.93) 24%, rgba(133,16,31,.74) 62%, rgba(92,10,21,.62) 100%);"></div>
     <canvas id="painEtch" aria-hidden="true"></canvas>
     <div class="wrap">
       <div class="band-head">
@@ -1042,6 +1081,7 @@
 
   <!-- 03 -->
   <section class="band" id="servicios">
+    <div class="photo" aria-hidden="true" style="--shot:url('assets/bg-gold-shears.webp'); --shot-pos:74% 60%; --shot-op:.9; --scrim:linear-gradient(90deg, var(--jet) 8%, rgba(6,6,10,.9) 38%, rgba(6,6,10,.55) 72%, rgba(6,6,10,.4) 100%);"></div>
     <div class="wrap">
       <div class="band-head">
         <div class="top">
@@ -1092,6 +1132,7 @@
 
   <!-- 04 -->
   <section class="band visit" id="visitanos">
+    <div class="photo" aria-hidden="true" style="--shot:url('assets/bg-tools.webp'); --shot-pos:78% 40%; --shot-op:.4; --scrim:linear-gradient(90deg, rgba(14,14,22,.94) 20%, rgba(14,14,22,.8) 60%, rgba(14,14,22,.6) 100%);"></div>
     <canvas id="visitEtch" aria-hidden="true"></canvas>
     <div class="wrap">
       <div class="band-head">
@@ -1167,7 +1208,7 @@
 
 <footer>
   <div class="wrap foot">
-    <span>Professional Barber · Vega Alta, PR</span>
+    <span>Professional Barber Shop · Vega Alta, PR</span>
     <span data-es="Propuesta de diseño · v2" data-en="Design proposal · v2">Propuesta de diseño · v2</span>
   </div>
 </footer>
@@ -1189,8 +1230,8 @@
 
   var WA_NUMBER = '17870000000'; // <- replace with the shop's real number
   var WA_TEXT = {
-    es: 'Hola Professional Barber. Quisiera reservar una cita.\n\nServicio: \nBarbero: \nDía y hora que prefiero: \n\nGracias.',
-    en: 'Hi Professional Barber. I would like to book an appointment.\n\nService: \nBarber: \nPreferred day and time: \n\nThank you.'
+    es: 'Hola Professional Barber Shop. Quisiera reservar una cita.\n\nServicio: \nBarbero: \nDía y hora que prefiero: \n\nGracias.',
+    en: 'Hi Professional Barber Shop. I would like to book an appointment.\n\nService: \nBarber: \nPreferred day and time: \n\nThank you.'
   };
 
   function waHref(l) { return 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(WA_TEXT[l]); }
